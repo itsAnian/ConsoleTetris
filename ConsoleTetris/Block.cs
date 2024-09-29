@@ -23,10 +23,11 @@ public class Block : IBlock
         State = StateEnum.Moving;
     }
 
-    public void PrintBlock()
+    public char PrintBlock()
     {
         Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), Color.ToString());
-        Console.Write("#");
+        char printBlock = '#';
+        return printBlock;
     }
 
     public void Gravity(List<Block> blocks)

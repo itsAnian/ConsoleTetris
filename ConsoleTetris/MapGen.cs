@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Text;
 
 namespace ConsoleTetris;
 
@@ -13,8 +14,8 @@ public class MapGen
 
     public void PrintMap()
     {
+        StringBuilder stringBuilder = new StringBuilder();
         Console.Clear();
-
         for (int y = 0; y < Globals.HIGHT; y++)
         {
             for (int x = 0; x < Globals.WIDTH; x++)
@@ -25,7 +26,7 @@ public class MapGen
                 {
                     if (block.XCooridnate == x && block.YCooridnate == y)
                     {
-                        block.PrintBlock();
+                        stringBuilder.Append(block.PrintBlock());
                         blockFound = true;
                         break;
                     }
@@ -33,12 +34,13 @@ public class MapGen
 
                 if (!blockFound)
                 {
-                    Console.ForegroundColor =
-                        (ConsoleColor)Enum.Parse(typeof(ConsoleColor), ColorEnum.White.ToString());
-                    Console.Write('?');
+                    Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), ColorEnum.White.ToString());
+                    stringBuilder.Append('.');
                 }
             }
-            Console.Write('\n');
+            stringBuilder.Append('\n');
         }
+        string map = stringBuilder.ToString();
+        Console.Write(map);
     }
 }
