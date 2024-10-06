@@ -23,4 +23,31 @@ public class ZShape : ITetrisObject
     {
         throw new NotImplementedException();
     }
+    
+    public void MoveLeft()
+    {
+        if (Block1.XCooridnate != 0 && Block2.XCooridnate != 0 && Block3.XCooridnate != 0 && Block4.XCooridnate != 0)
+        {
+            Block1.XCooridnate--;
+            Block2.XCooridnate--;
+            Block3.XCooridnate--;
+            Block4.XCooridnate--;
+        }
+    }
+
+    public void MoveRight()
+    {
+        if (Block1.XCooridnate != Globals.WIDTH - 1 && Block2.XCooridnate != Globals.WIDTH - 1 && Block3.XCooridnate != Globals.WIDTH - 1 && Block4.XCooridnate != Globals.WIDTH - 1)
+        {
+            Block1.XCooridnate++;
+            Block2.XCooridnate++;
+            Block3.XCooridnate++;
+            Block4.XCooridnate++;
+        }
+    }
+
+    public void MoveDown()
+    {
+        throw new NotImplementedException();
+    }
 }

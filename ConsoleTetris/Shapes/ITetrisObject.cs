@@ -9,4 +9,7 @@ public interface ITetrisObject
     
     public void GetPosition();
     public void Turn();
+    public void MoveLeft();
+    public void MoveRight();
+    public void MoveDown();
 }

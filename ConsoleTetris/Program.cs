@@ -7,6 +7,7 @@ class Program
     static void Main(string[] args)
     {
         List<Block> blocks = new List<Block>();
+        ITetrisObject movingShape = null;
         MapGen map = new MapGen(blocks);
         bool blockOrFloorBelow = true;
 
@@ -35,6 +36,7 @@ class Program
                     block.State = StateEnum.Stationary;
                 }
                 ITetrisObject randomShape = RandomShapePicker.PickRandomShape(1, 0);
+                movingShape = randomShape;
                 blocks.Add(randomShape.Block1);
                 blocks.Add(randomShape.Block2);
                 blocks.Add(randomShape.Block3);
@@ -47,8 +49,8 @@ class Program
                     block.Gravity();
                 }
             }
-
-            Thread.Sleep(1000);
+            
+            Thread.Sleep(100);
         }
     }
 }
