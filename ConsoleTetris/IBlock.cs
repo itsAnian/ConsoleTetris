@@ -3,5 +3,6 @@ namespace ConsoleTetris;
 public interface IBlock
 {
     public char PrintBlock();
-    public void Gravity(List<Block> blocks);
+    public bool Gravity();
+    public bool HasBlockOrFloorBelow(List<Block> blocks);
 }

@@ -30,35 +30,41 @@ public class Block : IBlock
         return printBlock;
     }
 
-    public void Gravity(List<Block> blocks)
+    public bool HasBlockOrFloorBelow(List<Block> blocks)
     {
-        bool blockfound = false;
-        if (YCooridnate < (Globals.HIGHT - 1) && State == StateEnum.Moving)
+        bool blockBelow = false;
+        foreach (var block in blocks)
         {
-            foreach (var block in blocks)
+            if (YCooridnate < Globals.HIGHT-1 && State == StateEnum.Moving)
             {
-                if (block.YCooridnate == (YCooridnate + 1) && block.State == StateEnum.Stationary)
+                if (block.YCooridnate == (YCooridnate + 1) && block.XCooridnate == XCooridnate &&
+                    block.State == StateEnum.Stationary)
                 {
-                    foreach (var movingBlock in blocks)
-                    {
-                        movingBlock.State = StateEnum.Stationary;
-                    }
-                    blockfound = true;
-                    break;
+                    blockBelow = true;
+                    return blockBelow;
                 }
             }
+            else if (State == StateEnum.Moving)
+            {
+                Console.WriteLine("I would go out of map");
+                blockBelow = true;
+                return blockBelow;
+            }
+        }
+        return blockBelow;
+    }
 
-            if (!blockfound && State == StateEnum.Moving)
-            {
-                YCooridnate++;
-            }
-        }
-        else if (State == StateEnum.Moving)
+    public bool Gravity()
+    {
+        bool moving = true;
+        if (State == StateEnum.Moving)
         {
-            foreach (var movingBlock in blocks)
-            {
-                movingBlock.State = StateEnum.Stationary;
-            }
+            YCooridnate++;
         }
+        else
+        {
+            return false;
+        }
+        return moving;
     }
 }
