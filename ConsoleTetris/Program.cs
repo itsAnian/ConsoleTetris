@@ -8,33 +8,47 @@ class Program
     {
         List<Block> blocks = new List<Block>();
         MapGen map = new MapGen(blocks);
-        bool movingBlocks = false;
-        //Array colorEnumValues = Enum.GetValues(typeof(ColorEnum));
-        //Random random = new Random();
-        
+        bool blockOrFloorBelow = true;
+
         while (true)
         {
             map.PrintMap();
+            blocks.Sort((block1, block2) => block1.YCooridnate.CompareTo(block2.YCooridnate));
+
             foreach (var block in blocks)
             {
-                block.Gravity(blocks);
-                if (block.State == StateEnum.Moving)
+                if (block.HasBlockOrFloorBelow(blocks))
                 {
-                    movingBlocks = true;
+                    blockOrFloorBelow = true;
+                    break;
+                }
+                else
+                {
+                    blockOrFloorBelow = false;
                 }
             }
 
-            if (!movingBlocks)
+            if (blockOrFloorBelow)
             {
+                foreach (var block in blocks)
+                {
+                    block.State = StateEnum.Stationary;
+                }
                 ITetrisObject randomShape = RandomShapePicker.PickRandomShape(1, 0);
                 blocks.Add(randomShape.Block1);
                 blocks.Add(randomShape.Block2);
                 blocks.Add(randomShape.Block3);
-                blocks.Add(randomShape.Block4); 
+                blocks.Add(randomShape.Block4);
+            }
+            else
+            {
+                foreach (var block in blocks)
+                {
+                    block.Gravity();
+                }
             }
 
-            movingBlocks = false;
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
         }
     }
 }
