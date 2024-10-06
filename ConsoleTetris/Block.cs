@@ -46,7 +46,6 @@ public class Block : IBlock
             }
             else if (State == StateEnum.Moving)
             {
-                Console.WriteLine("I would go out of map");
                 blockBelow = true;
                 return blockBelow;
             }
