@@ -2,14 +2,7 @@ namespace ConsoleTetris.Shapes;
 
 public interface ITetrisObject
 {
-    public Block Block1 { get; set; }
-    public Block Block2 { get; set; }
-    public Block Block3 { get; set; }
-    public Block Block4 { get; set; }
-    
-    public void GetPosition();
-    public void Turn();
-    public void MoveLeft();
-    public void MoveRight();
+    public void MoveLeft(Block block1, Block block2, Block block3, Block block4);
+    public void MoveRight(Block block1, Block block2, Block block3, Block block4);
     public void MoveDown();
 }

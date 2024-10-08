@@ -1,11 +1,13 @@
 namespace ConsoleTetris.Shapes;
 
-public class TShape : ITetrisObject
+public class TShape : IShape
 {
     public Block Block1 { get; set; }
     public Block Block2 { get; set; }
     public Block Block3 { get; set; }
     public Block Block4 { get; set; }
+    public int RotationState { get; set; }
+    private TetrisObjectService _tetrisObjectService;
 
     public TShape(int xCoordinate, int yCoordinate)
     {
@@ -13,41 +15,73 @@ public class TShape : ITetrisObject
         Block2 = new Block(ColorEnum.Magenta, xCoordinate + 1, yCoordinate + 0);
         Block3 = new Block(ColorEnum.Magenta, xCoordinate + 1, yCoordinate + 1);
         Block4 = new Block(ColorEnum.Magenta, xCoordinate + 2, yCoordinate + 0);
-    }
-    public void GetPosition()
-    {
-        throw new NotImplementedException();
+        RotationState = 0;
+        _tetrisObjectService = new TetrisObjectService();
     }
 
     public void Turn()
     {
-        throw new NotImplementedException();
-    }
-    
-    public void MoveLeft()
-    {
-        if (Block1.XCooridnate != 0 && Block2.XCooridnate != 0 && Block3.XCooridnate != 0 && Block4.XCooridnate != 0)
+        if (RotationState < 270)
         {
-            Block1.XCooridnate--;
-            Block2.XCooridnate--;
-            Block3.XCooridnate--;
-            Block4.XCooridnate--;
+            RotationState += 90;
         }
-    }
-
-    public void MoveRight()
-    {
-        if (Block1.XCooridnate != Globals.WIDTH - 1 && Block2.XCooridnate != Globals.WIDTH - 1 && Block3.XCooridnate != Globals.WIDTH - 1 && Block4.XCooridnate != Globals.WIDTH - 1)
+        else
         {
-            Block1.XCooridnate++;
-            Block2.XCooridnate++;
-            Block3.XCooridnate++;
-            Block4.XCooridnate++;
+            RotationState = 0;
         }
-    }
 
-    public void MoveDown()
-    {
-        throw new NotImplementedException();
+        switch (RotationState)
+        {
+            case 0:
+                Block1.XCooridnate = Block1.XCooridnate - 1;
+                Block1.YCooridnate = Block1.YCooridnate - 1;
+                //Block2.XCooridnate = Block2.XCooridnate + 0;
+                //Block2.YCooridnate = Block2.YCooridnate + 0;
+                Block3.XCooridnate = Block3.XCooridnate - 1;
+                Block3.YCooridnate = Block3.YCooridnate + 1;
+                Block4.XCooridnate = Block4.XCooridnate + 1;
+                Block4.YCooridnate = Block4.YCooridnate + 1;
+
+                _tetrisObjectService.CheckIfInBorder(Block1, Block2, Block3, Block4);
+
+                break;
+            case 90:
+                Block1.XCooridnate = Block1.XCooridnate + 1;
+                Block1.YCooridnate = Block1.YCooridnate - 1;
+                //Block2.XCooridnate = Block2.XCooridnate + 0;
+                //Block2.YCooridnate = Block2.YCooridnate + 0;
+                Block3.XCooridnate = Block3.XCooridnate - 1;
+                Block3.YCooridnate = Block3.YCooridnate - 1;
+                Block4.XCooridnate = Block4.XCooridnate - 1;
+                Block4.YCooridnate = Block4.YCooridnate + 1;
+                
+                _tetrisObjectService.CheckIfInBorder(Block1, Block2, Block3, Block4);
+
+                break;
+            case 180:
+                Block1.XCooridnate = Block1.XCooridnate + 1;
+                Block1.YCooridnate = Block1.YCooridnate + 1;
+                //Block2.XCooridnate = Block2.XCooridnate + 0;
+                //Block2.YCooridnate = Block2.YCooridnate + 0;
+                Block3.XCooridnate = Block3.XCooridnate + 1;
+                Block3.YCooridnate = Block3.YCooridnate - 1;
+                Block4.XCooridnate = Block4.XCooridnate - 1;
+                Block4.YCooridnate = Block4.YCooridnate - 1;
+                _tetrisObjectService.CheckIfInBorder(Block1, Block2, Block3, Block4);
+
+                break;
+            case 270:
+                Block1.XCooridnate = Block1.XCooridnate - 1;
+                Block1.YCooridnate = Block1.YCooridnate + 1;
+                //Block2.XCooridnate = Block2.XCooridnate + 0;
+                //Block2.YCooridnate = Block2.YCooridnate + 0;
+                Block3.XCooridnate = Block3.XCooridnate + 1;
+                Block3.YCooridnate = Block3.YCooridnate + 1;
+                Block4.XCooridnate = Block4.XCooridnate + 1;
+                Block4.YCooridnate = Block4.YCooridnate - 1;
+                _tetrisObjectService.CheckIfInBorder(Block1, Block2, Block3, Block4);
+
+                break;
+        }
     }
 }
